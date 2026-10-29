@@ -1,14 +1,82 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+    provider = "prisma-client"
+    output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+    provider = "postgresql"
 }
 
-model Todo {
-  id        Int      @id @default(autoincrement())
-  title     String
-  createdAt DateTime @default(now())
+model Users {
+    id               String  @id @default(uuid(7)) @db.Uuid
+    email            String  @unique @db.VarChar(254)
+    displayEmail     String  @db.VarChar(254)
+    name             String  @db.VarChar(100)
+    emailVerified    Boolean @default(false) @map("email_verified")
+    twoFactorEnabled Boolean @default(false) @map("two_factor_enabled")
+    isOnboarded      Boolean @default(false) @map("is_onboarded")
+
+    accounts Accounts[]
+    sessions Sessions[]
+
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+    @@map("users")
+}
+
+model Accounts {
+    id           String  @id @default(uuid(7)) @db.Uuid
+    userId       String  @map("user_id") @db.Uuid
+    providerType String  @map("provider_type") @db.VarChar(100)
+    providerId   String? @map("provider_id") @db.VarChar(255)
+    passwordHash String? @map("password_hash")
+
+    user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+    @@unique([providerType, providerId])
+    @@map("accounts")
+}
+
+model Sessions {
+    id     String @id @default(uuid(7)) @db.Uuid
+    userId String @map("user_id") @db.Uuid
+
+    // Metadata
+    deviceName   String?   @map("device_name") @db.VarChar(255)
+    userAgent    String?   @map("user_agent") @db.Text
+    ipAddress    String?   @map("ip_address") @db.Inet
+    lastActiveAt DateTime? @map("last_active_at") @db.Timestamptz(3)
+
+    user          Users           @relation(fields: [userId], references: [id], onDelete: Cascade)
+    refreshTokens RefreshTokens[]
+
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+    updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+    expiresAt DateTime  @map("expires_at") @db.Timestamptz(3)
+    revokedAt DateTime? @map("revoked_at") @db.Timestamptz(3)
+
+    @@index([userId], name: "sessions_user_id_index")
+    @@map("sessions")
+}
+
+model RefreshTokens {
+    id                 String @id @default(uuid(7)) @db.Uuid
+    sessionId          String @map("session_id") @db.Uuid
+    hashedRefreshToken String @unique @map("hashed_refresh_token") @db.VarChar(64)
+
+    session Sessions @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+    createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+    updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+    expiresAt  DateTime  @map("expires_at") @db.Timestamptz(3)
+    consumedAt DateTime? @map("consumed_at") @db.Timestamptz(3)
+
+    //Constraint: ExpiresAt always must be greater than CreatedAt
+
+    @@index([sessionId], name: "refresh_tokens_session_id_index")
+    @@map("refresh_tokens")
 }

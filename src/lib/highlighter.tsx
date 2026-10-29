@@ -1,9 +1,10 @@
 import * as React from "react"
 import {
-  createHighlighterCore,
-  type GrammarState,
-  type HighlighterCore,
+  createHighlighterCore
+  
+  
 } from "shiki/core"
+import type {GrammarState, HighlighterCore} from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript"
 
 // Add the languages you need. Each one loads the first time it is used.
@@ -50,7 +51,7 @@ function getHighlighter() {
   return highlighter
 }
 
-function getLanguage(language: string) {
+function getLanguage(language: string): keyof typeof languages | "ansi" | null {
   const name = language.toLowerCase()
 
   if (name === "ansi") {

@@ -9,6 +9,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
 :root {
   --sea-ink: #173a40;
   --sea-ink-soft: #416166;

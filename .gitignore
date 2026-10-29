@@ -1,13 +1,45 @@
-node_modules
-.DS_Store
-dist
-dist-ssr
-*.local
-.env
-.nitro
-.tanstack
-.wrangler
-.output
-.vinxi
+# Dependencies & Package Managers
+node_modules/
+.pnpm-store/
+
+# Build & Bundler Outputs
+dist/
+dist-ssr/
+.nitro/
+.tanstack/
+.wrangler/
+.output/
+.vinxi/
 __unconfig*
+
+# Prisma & Databases
+# (Only include this if you set an explicit custom output in schema.prisma, e.g. output = "./src/generated/client")
+# src/generated/client/
+# Database files (if using SQLite)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# Local data & temp files
 todos.json
