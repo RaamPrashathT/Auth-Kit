@@ -6,23 +6,23 @@ import type {VariantProps} from "class-variance-authority";
 import { cn } from "cn"
 import { Slot } from "radix-ui"
 
-import { useIsMobile } from "#/hooks/use-mobile.ts"
-import { Button } from "#/components/ui/button.tsx"
-import { Input } from "#/components/ui/input.tsx"
-import { Separator } from "#/components/ui/separator.tsx"
+import { useIsMobile } from "#/shared/hooks/use-mobile"
+import { Button } from "#/shared/components/ui/button"
+import { Input } from "#/shared/components/ui/input"
+import { Separator } from "#/shared/components/ui/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "#/components/ui/sheet.tsx"
-import { Skeleton } from "#/components/ui/skeleton.tsx"
+} from "#/shared/components/ui/sheet"
+import { Skeleton } from "#/shared/components/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "#/components/ui/tooltip.tsx"
+} from "#/shared/components/ui/tooltip"
 import { PanelLeftIcon } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"

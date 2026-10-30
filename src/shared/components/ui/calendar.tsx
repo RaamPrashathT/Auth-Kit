@@ -10,7 +10,7 @@ import {
 } from "react-day-picker"
 import type {DayButton, Locale} from "react-day-picker";
 
-import { Button, buttonVariants } from "#/components/ui/button.tsx"
+import { Button, buttonVariants } from "#/shared/components/ui/button"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
 
 function Calendar({

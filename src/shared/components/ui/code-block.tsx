@@ -3,7 +3,7 @@ import { cva  } from "class-variance-authority"
 import type {VariantProps} from "class-variance-authority";
 import { cn } from "cn"
 
-import { Button } from "#/components/ui/button.tsx"
+import { Button } from "#/shared/components/ui/button"
 import { CheckIcon, CopyIcon } from "lucide-react"
 
 const codeBlockVariants = cva(
